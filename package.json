@@ -9,7 +9,6 @@
   "scripts": {
     "build": "webpack build",
     "test": "karma start karma.conf.js --single-run",
-    "codecov": "cat coverage/lcov.info | codecov",
     "clean": "rimraf build/",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"yarn run watch:ts\" \"yarn run watch:serve\"",
     "watch:serve": "serve .",
@@ -29,7 +28,6 @@
     "typescript": "^3.8.3",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "codecov": "^3.6.5",
     "istanbul-instrumenter-loader": "^3.0.1",
     "karma": "^5.0.2",
     "karma-chrome-launcher": "^3.1.0",

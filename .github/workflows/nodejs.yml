@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Browser Tests
 
 on:
   push:
@@ -23,8 +23,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install --frozen-lockfile
-      - run: yarn run build
       - run: yarn run test
-      - run: yarn run codecov
-        env:
-          CI: true
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v1
