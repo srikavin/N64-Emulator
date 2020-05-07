@@ -7,6 +7,8 @@ export const INT64_MIN = -9223372036854775808;
 export const UINT32_MAX = BigInt(4294967295);
 export const UINT64_MAX = BigInt(18446744073709551615);
 
+export const BIGINT_1 = BigInt(1);
+
 /**
  * Extracts the specified bits from the given value. Bit 31 is the highest-order (left-most) bit.
  * @param val The number to extract bits from

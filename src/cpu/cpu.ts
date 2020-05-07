@@ -1,25 +1,4 @@
 import {Register} from './register'
-import {convertToUnsignedValue} from "../util";
-
-const low_handler: ProxyHandler<any> = {
-    get: (target, p, receiver) => {
-        return target[2 * (<number>p) + 1];
-    },
-    set: (target, p, value, receiver): boolean => {
-        target[2 * (<number>p) + 1] = value;
-        return true;
-    }
-}
-
-const high_handler: ProxyHandler<any> = {
-    get: (target, p, receiver) => {
-        return target[2 * (<number>p)];
-    },
-    set: (target, p, value, receiver): boolean => {
-        target[2 * (<number>p)] = value;
-        return true;
-    }
-}
 
 export class Cpu {
     /**
@@ -33,7 +12,7 @@ export class Cpu {
 
     reg_u(reg: Register, val?: bigint): bigint {
         const offset = reg * 8;
-        if (val) {
+        if (val !== undefined) {
             this.registers.setBigUint64(offset, val);
             return val;
         }
@@ -42,7 +21,7 @@ export class Cpu {
 
     reg_s(reg: Register, val?: bigint): bigint {
         const offset = reg * 8;
-        if (val) {
+        if (val !== undefined) {
             this.registers.setBigInt64(offset, val);
             return val;
         }
@@ -51,7 +30,7 @@ export class Cpu {
 
     reg_lo_u(reg: Register, val?: number): number {
         const offset = (2 * reg + 1) * 8;
-        if (val) {
+        if (val !== undefined) {
             this.registers.setUint32(offset, val);
             return val;
         }
@@ -60,7 +39,7 @@ export class Cpu {
 
     reg_lo_s(reg: Register, val?: number): number {
         const offset = (2 * reg + 1) * 8;
-        if (val) {
+        if (val !== undefined) {
             this.registers.setInt32(offset, val);
             return val;
         }
@@ -69,7 +48,7 @@ export class Cpu {
 
     reg_hi_u(reg: Register, val?: number) {
         const offset = (2 * reg) * 8;
-        if (val) {
+        if (val !== undefined) {
             this.registers.setUint32(offset, val);
             return val;
         }
@@ -78,7 +57,7 @@ export class Cpu {
 
     reg_hi_s(reg: Register, val?: number): number {
         const offset = (2 * reg) * 8;
-        if (val) {
+        if (val !== undefined) {
             this.registers.setInt32(offset, val);
             return val;
         }

@@ -17,6 +17,22 @@ describe('convertToUnsignedValue', () => {
 
         expect(output).equals(-8);
     })
+
+    it('should not change 5 to -5', function () {
+        const input = 5;
+
+        const output = convertToUnsignedValue(input, 32);
+
+        expect(output).equals(input);
+    });
+
+    it('should not change -8', function () {
+        const input = -8;
+
+        const output = convertToUnsignedValue(input, 32);
+
+        expect(output).equals(input);
+    });
 })
 
 describe('extractBits', () => {

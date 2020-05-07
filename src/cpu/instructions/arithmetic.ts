@@ -1,15 +1,18 @@
 import {IInstruction, RInstruction} from "../instruction";
 import {Cpu} from "../cpu";
-import {INT32_MAX, INT64_MAX, UINT32_MAX, UINT64_MAX} from "../../util";
+import {BIGINT_1, INT32_MAX, INT64_MAX, UINT32_MAX, UINT64_MAX} from "../../util";
 import {Register} from "../register";
 
-export class IntegerOverflowException {
+export class IntegerOverflowException extends Error {
 
 }
 
 export const ArithmeticInstructions = {
     add: add,
     addi: addi,
+    addu: addu,
+    addiu: addiu,
+    dadd: dadd,
 }
 
 function add(instruction: RInstruction, cpu: Cpu) {
@@ -31,17 +34,19 @@ function addi(instruction: IInstruction, cpu: Cpu) {
         throw new IntegerOverflowException();
     }
 
-    cpu.reg_u(instruction.rs, ret);
+    cpu.reg_u(instruction.rt, ret);
 }
 
-function addu(instruction: IInstruction, cpu: Cpu) {
-    let ret = (cpu.reg_u(instruction.rs) + cpu.reg_u(instruction.rt)) % UINT32_MAX;
+function addu(instruction: RInstruction, cpu: Cpu) {
+    // unsigned overflow acts a wrap around
+    let ret = (cpu.reg_u(instruction.rs) + cpu.reg_u(instruction.rt)) % (UINT32_MAX + BIGINT_1);
 
-    cpu.reg_u(instruction.rt, ret)
+    cpu.reg_u(instruction.rd, ret)
 }
 
 function addiu(instruction: IInstruction, cpu: Cpu) {
-    let ret = (cpu.reg_u(instruction.rs) + BigInt(instruction.imm_us)) % UINT32_MAX;
+    // unsigned overflow acts a wrap around
+    let ret = (cpu.reg_u(instruction.rs) + BigInt(instruction.imm_us)) % (UINT32_MAX + BIGINT_1);
 
     cpu.reg_u(instruction.rt, ret);
 }

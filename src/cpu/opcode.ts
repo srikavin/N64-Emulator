@@ -75,7 +75,7 @@ export function isRInstructionOpcode(opcode: Opcode): opcode is RInstructionOpco
     return opcode == Opcode.SPECIAL;
 }
 
-function isFRInstructionOpcode(opcode: Opcode): opcode is FRInstructionOpcode {
+export function isFRInstructionOpcode(opcode: Opcode): opcode is FRInstructionOpcode {
     return opcode == Opcode.COP1;
 }
 

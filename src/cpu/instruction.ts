@@ -1,4 +1,4 @@
-import {Register} from "./register";
+import {FPRegister, Register} from "./register";
 import {Opcode} from "./opcode";
 
 interface InstructionBase {
@@ -64,17 +64,27 @@ export interface FRInstruction extends InstructionBase {
     /**
      * Source register
      */
-    fs: Register;
+    fs: FPRegister;
     /**
      * Source/Destination register
      */
-    ft: Register;
+    ft: FPRegister;
     /**
      * Destination register
      */
-    fd: Register;
+    fd: FPRegister;
+    /**
+     * Bit 17
+     */
+    nd: boolean;
+    /**
+     * Bit 16
+     */
+    tf: boolean;
     /**
      * Instruction format specifier
+     *
+     * Bits 25..21
      */
     fmt: COP1_Fmt;
     /**
@@ -238,23 +248,47 @@ export enum COP1_Fmt {
 
     BC = 0b01_000,
 
+    /**
+     * Single (32-bits floating-point)
+     */
     S = 0b10_000,
+    /**
+     * Double (64-bits floating-point)
+     */
     D = 0b10_001,
+    /**
+     * Word (32-bits fixed-point)
+     */
     W = 0b10_100,
+    /**
+     * Long (64-bits fixed-point)
+     */
     L = 0b10_101
 }
 
 export enum COP1_nd_tf {
+    /**
+     * Branch on FP false
+     */
     BC1F = 0b0_0,
+    /**
+     * Branch on FP true
+     */
     BC1T = 0b0_1,
+    /**
+     * Branch on FP false likely
+     */
     BC1FL = 0b1_0,
+    /**
+     * Branch on FP true likely
+     */
     BC1TL = 0b1_1
 }
 
 /**
  * Represents the shared functions for COP1 instructions where fmt = S or D
  */
-enum COP1_Function_SD_Base {
+export enum COP1_Function_SD_Base {
     ADD = 0b000_000,
     SUB = 0b000_001,
     MUL = 0b000_010,
@@ -295,15 +329,15 @@ enum COP1_Function_SD_Base {
     C_NGT = 0b111_111
 }
 
-enum COP1_Function_S {
+export enum COP1_Function_S {
     CVT_D = 0b100_001
 }
 
-enum COP1_Function_D {
+export enum COP1_Function_D {
     CVT_S = 0b100_000
 }
 
-enum COP1_Function_WL {
+export enum COP1_Function_WL {
     CVT_S = 0b100_000,
     CVT_D = 0b100_001
 }

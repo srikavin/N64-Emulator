@@ -1,4 +1,4 @@
-class Cp0 {
+class Cp1 {
     registers = {
         f0: 0,
         f1: 0,

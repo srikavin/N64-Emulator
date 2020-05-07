@@ -111,3 +111,12 @@ export function getRegister(num: number) {
     }
     throw new Error(`Unknown register value ${num}!`)
 }
+
+export function getFPRegister(num: number) {
+    const register = FPRegister[num];
+
+    if (register in FPRegister) {
+        return FPRegister[register as keyof typeof FPRegister]
+    }
+    throw new Error(`Unknown floating-point register value ${num}!`)
+}

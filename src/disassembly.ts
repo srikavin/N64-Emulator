@@ -1,7 +1,13 @@
 import {extractBits} from "./util";
-import {getRegister} from "./cpu/register";
-import {Instruction, SPECIAL_Functions} from "./cpu/instruction";
-import {isIInstructionOpcode, isJInstructionOpcode, isRInstructionOpcode, Opcode} from "./cpu/opcode";
+import {getFPRegister, getRegister} from "./cpu/register";
+import {COP1_Fmt, Instruction, SPECIAL_Functions} from "./cpu/instruction";
+import {
+    isFRInstructionOpcode,
+    isIInstructionOpcode,
+    isJInstructionOpcode,
+    isRInstructionOpcode,
+    Opcode
+} from "./cpu/opcode";
 
 
 export function getOpcode(instructions: Uint32Array, index: number): Opcode {
@@ -22,6 +28,15 @@ export function getFunction(id: number) {
         return SPECIAL_Functions[func as keyof typeof SPECIAL_Functions]
     }
     throw new Error(`Unknown function value ${id}!`)
+}
+
+export function getFormat(id: number) {
+    const fmt = COP1_Fmt[id];
+
+    if (fmt in COP1_Fmt) {
+        return COP1_Fmt[fmt as keyof typeof COP1_Fmt]
+    }
+    throw new Error(`Unknown format value ${id}!`)
 }
 
 export function disassemble(instruction: Uint32Array, index: number): Instruction {
@@ -49,6 +64,17 @@ export function disassemble(instruction: Uint32Array, index: number): Instructio
             rt: getRegister(extractBits(val, 20, 16)),
             imm: extractBits(val, 15, 0, true),
             imm_us: extractBits(val, 15, 0, false)
+        }
+    } else if (isFRInstructionOpcode(opcode)) {
+        return {
+            opcode: opcode,
+            fmt: getFormat(extractBits(val, 25, 21)),
+            func: getFunction(extractBits(val, 5, 0)),
+            nd: extractBits(val, 17, 17) === 1,
+            tf: extractBits(val, 16, 16) === 1,
+            fd: getFPRegister(extractBits(val, 10, 6)),
+            fs: getFPRegister(extractBits(val, 15, 11)),
+            ft: getFPRegister(extractBits(val, 20, 16))
         }
     }
 }
