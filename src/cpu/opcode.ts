@@ -87,6 +87,6 @@ export function isIInstructionOpcode(opcode: Opcode): opcode is IInstructionOpco
     return [
         Opcode.SLTI, Opcode.SLTIU, Opcode.ANDI, Opcode.ORI, Opcode.LUI, Opcode.SW, Opcode.BEQ, Opcode.BNE,
         Opcode.BLEZ, Opcode.BGTZ, Opcode.ADDI, Opcode.ADDIU, Opcode.LB, Opcode.LW, Opcode.LBU, Opcode.LHU,
-        Opcode.SB, Opcode.SH
+        Opcode.SB, Opcode.SH, Opcode.DADDIU, Opcode.DADDI
     ].includes(opcode)
 }

@@ -13,6 +13,7 @@ export const ArithmeticInstructions = {
     addu: addu,
     addiu: addiu,
     dadd: dadd,
+    daddi: daddi
 }
 
 function add(instruction: RInstruction, cpu: Cpu) {
@@ -52,7 +53,7 @@ function addiu(instruction: IInstruction, cpu: Cpu) {
 }
 
 function dadd(instruction: RInstruction, cpu: Cpu) {
-    let ret = (cpu.reg_s(instruction.rs) + cpu.reg_s(instruction.rt));
+    let ret = (BigInt.asIntN(128, cpu.reg_s(instruction.rs)) + BigInt.asIntN(128, cpu.reg_s(instruction.rt)));
 
     if (ret > INT64_MAX) {
         // handle exception
@@ -63,7 +64,7 @@ function dadd(instruction: RInstruction, cpu: Cpu) {
 }
 
 function daddi(instruction: IInstruction, cpu: Cpu) {
-    let ret = (cpu.reg_s(instruction.rs) + BigInt(instruction.imm));
+    let ret = (BigInt.asIntN(128, cpu.reg_s(instruction.rs)) + BigInt.asIntN(128, BigInt(instruction.imm)));
 
     if (ret > INT64_MAX) {
         // handle exception

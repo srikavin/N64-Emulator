@@ -17,6 +17,8 @@ export type RInstructionOpcode = Opcode.SPECIAL;
 export type FRInstructionOpcode = Opcode.COP1;
 export type JInstructionOpcode = Opcode.J | Opcode.JAL;
 export type IInstructionOpcode = Opcode.SLTI
+    | Opcode.DADDI
+    | Opcode.DADDIU
     | Opcode.SLTIU
     | Opcode.ANDI
     | Opcode.ORI
