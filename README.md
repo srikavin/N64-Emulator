@@ -1,1 +1,1 @@
-# N64 Emulator ![Browser Tests](https://github.com/srikavin/N64-Emulator/workflows/Browser%20Tests/badge.svg) [![codecov](https://codecov.io/gh/srikavin/N64-emulator/branch/master/graph/badge.svg)](https://codecov.io/gh/srikavin/N64-emulator) 
+# N64 Emulator [![Browser Tests](https://github.com/srikavin/N64-Emulator/workflows/Browser%20Tests/badge.svg)](https://github.com/srikavin/N64-Emulator/actions?query=workflow%3A%22Browser+Tests%22) [![codecov](https://codecov.io/gh/srikavin/N64-emulator/branch/master/graph/badge.svg)](https://codecov.io/gh/srikavin/N64-emulator) 
